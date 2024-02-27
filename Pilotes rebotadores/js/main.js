@@ -9,24 +9,25 @@
 */
 // main.js
 
-import { Pilota } from "./pilota.js"; // Importar la clase Pilota desde otro archivo
+// Preparación del canvas y contexto 2D
+import { Pilota } from "./pilota.js";
 
-const canvas = document.querySelector("canvas"); // Referencia al elemento canvas
-const ctx = canvas.getContext("2d"); // Contexto 2D para dibujar en el canvas
-const width = (canvas.width = window.innerWidth); // Ancho del canvas
-const height = (canvas.height = window.innerHeight); // Alto del canvas
-const pilotes = []; // Array para almacenar las instancias de Pilota
+const canvas = document.querySelector("canvas");
+const ctx = canvas.getContext("2d");
 
-// Función principal que se ejecuta en bucle para animar las pelotas
+const width = (canvas.width = window.innerWidth);
+const height = (canvas.height = window.innerHeight);
+const pilotes = [];
+
+// Bucle principal para la animación
 function loop() {
-  // Limpiar el canvas con un rectángulo negro
+  // Limpia el canvas
   ctx.fillStyle = "black";
   ctx.fillRect(0, 0, width, height);
 
-  // Crear nuevas pelotas si no hay ninguna en el array
+  // Crea nuevas pelotas si no hay ninguna
   if (pilotes.length === 0) {
     for (let i = 0; i < 20; i++) {
-      // Crear una nueva instancia de Pilota con valores aleatorios
       const pilota = new Pilota(
         Math.random() * (width - 20) + 10,
         Math.random() * (height - 20) + 10,
@@ -37,23 +38,24 @@ function loop() {
         width,
         height
       );
-      pilotes.push(pilota); // Agregar la nueva pelota al array
+      pilotes.push(pilota);
     }
   }
 
-  // Dibujar y mover cada pelota en el array
+  // Dibuja y mueve las pelotas
   pilotes.forEach((pilota) => {
     pilota.dibuixa(ctx);
     pilota.mou();
   });
 
-  // Detectar y manejar colisiones entre pelotas
+  // Detecta colisiones entre las pelotas
   detectaColisions(pilotes);
 
-  requestAnimationFrame(loop); // Llamar a loop de nuevo en el siguiente frame
+  // Llama al próximo cuadro de animación
+  requestAnimationFrame(loop);
 }
 
-// Función para detectar colisiones entre pelotas
+// Detecta colisiones entre pelotas
 function detectaColisions(pilotes) {
   for (let i = 0; i < pilotes.length; i++) {
     for (let j = i + 1; j < pilotes.length; j++) {
@@ -61,9 +63,8 @@ function detectaColisions(pilotes) {
       const dy = pilotes[i].y - pilotes[j].y;
       const distance = Math.sqrt(dx * dx + dy * dy);
 
-      // Si la distancia entre dos pelotas es menor que la suma de sus radios, hay colisión
       if (distance < pilotes[i].mida + pilotes[j].mida) {
-        // Intercambiar velocidades para simular el rebote
+        // Invierte las velocidades en caso de colisión
         const tempVelX = pilotes[i].velX;
         const tempVelY = pilotes[i].velY;
 
@@ -77,4 +78,6 @@ function detectaColisions(pilotes) {
   }
 }
 
-loop(); // Iniciar el bucle de animación
+// Inicia el bucle principal
+loop();
+

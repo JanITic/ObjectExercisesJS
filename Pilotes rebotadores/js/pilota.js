@@ -1,43 +1,36 @@
-// Clase para representar una pelota en un lienzo (canvas)
+// Clase Pilota para representar pelotas en el canvas
 export class Pilota {
-  // Constructor
-  constructor({ x, y, velX, velY, color, mida, canvasWidth, canvasHeight }) {
-      // Propiedades de la pelota
-      this.x = x; // Posición x
-      this.y = y; // Posición y
-      this.velX = velX; // Velocidad en x
-      this.velY = velY; // Velocidad en y
-      this.color = color; // Color
-      this.mida = mida; // Tamaño
-      this.canvasWidth = canvasWidth; // Ancho del lienzo
-      this.canvasHeight = canvasHeight; // Alto del lienzo
-  }
-
-  // Método para dibujar la pelota en el lienzo
-  dibuixa(ctx) {
-      ctx.beginPath(); // Iniciar trazado
-      ctx.fillStyle = this.color; // Color de relleno
-      ctx.arc(this.x, this.y, this.mida, 0, 2 * Math.PI); // Dibujar círculo
-      ctx.fill(); // Rellenar
-  }
-
-  // Método para mover la pelota dentro del lienzo
-  mou() {
-      const { x, y, mida, canvasWidth, canvasHeight } = this; // Extraer propiedades
-      const { velX, velY } = this; // Extraer velocidades
-      
-      // Verificar límites horizontales
-      if (x + mida >= canvasWidth || x - mida <= 0) {
-          this.velX = -velX; // Invertir velocidad x
+    constructor(x, y, velX, velY, color, mida, canvasWidth, canvasHeight) {
+      this.x = x; // Posición en el eje x
+      this.y = y; // Posición en el eje y
+      this.velX = velX; // Velocidad en el eje x
+      this.velY = velY; // Velocidad en el eje y
+      this.color = color; // Color de la pelota
+      this.mida = mida; // Tamaño de la pelota (radio)
+      this.canvasWidth = canvasWidth; // Ancho del canvas
+      this.canvasHeight = canvasHeight; // Altura del canvas
+    }
+  
+    // Método para dibujar la pelota en el canvas
+    dibuixa(ctx) {
+      ctx.beginPath();
+      ctx.fillStyle = this.color;
+      ctx.arc(this.x, this.y, this.mida, 0, 2 * Math.PI);
+      ctx.fill();
+    }
+  
+    // Método para mover la pelota
+    mou() {
+      // Revisa si la pelota alcanza los bordes del canvas y cambia de dirección si es así
+      if (this.x + this.mida >= this.canvasWidth || this.x - this.mida <= 0) {
+        this.velX = -this.velX;
       }
-
-      // Verificar límites verticales
-      if (y + mida >= canvasHeight || y - mida <= 0) {
-          this.velY = -velY; // Invertir velocidad y
+      if (this.y + this.mida >= this.canvasHeight || this.y - this.mida <= 0) {
+        this.velY = -this.velY;
       }
-
-      // Actualizar posición
+  
+      // Actualiza la posición de la pelota según su velocidad
       this.x += this.velX;
       this.y += this.velY;
+    }
   }
-}
