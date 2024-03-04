@@ -1,0 +1,28 @@
+/* Agregar estilo para los botones */
+button {
+    background-color: #ef2b2b;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    margin: 5px;
+}
+
+button:hover {
+    background-color: #a10c0c;
+}
+
+/* Estilo para el input de búsqueda */
+#txtSearch {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin: 5px;
+}
+
+/* Estilo para el contenedor del gráfico */
+.chart-container {
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto;
+}
